@@ -1,0 +1,140 @@
+## **Step 0: Gather Information**
+
+Before touching anything:
+
+1. Ask the user:
+
+   * “What document are you trying to print?” (file type, size)
+   * “When did the issue start?”
+   * “Has it ever worked on this PC?”
+2. Note the printer model, PC OS version, and connection type (USB, Wi-Fi, Ethernet).
+
+---
+
+## **Step 1: Physical & Basic Checks**
+
+1. Confirm **printer is powered on** and no errors are showing on the printer screen (paper jam, low ink).
+2. Ensure **printer has paper** and ink/toner.
+3. Check **cables or Wi-Fi connection**:
+
+   * USB: check connection
+   * Network: check Wi-Fi or Ethernet cable
+
+---
+
+## **Step 2: Check Network Connectivity (if network printer)**
+
+1. Ping the printer IP from the PC:
+
+   ```
+   ping <printer-ip>
+   ```
+
+   * Successful ping → printer reachable
+   * Failed ping → network issue
+2. Use tools like **Advanced IP Scanner** to confirm printer is on the network.
+3. Restart **network devices** (router/switch) if printer not reachable.
+
+---
+
+## **Step 3: Check Printer Status on Windows**
+
+1. Open **Settings → Devices → Printers & scanners**.
+2. Confirm printer appears and check status:
+
+   * “Ready” → ok
+   * “Offline” → troubleshoot
+   * Errors like “Paper Jam”, “Needs Attention”
+
+---
+
+## **Step 4: Check the Print Queue**
+
+1. Open **print queue** for the printer.
+2. Look for stuck jobs.
+
+   * Cancel any stuck jobs.
+3. Try printing a **test page** from Windows:
+
+   * `Settings → Devices → Printers → Print a test page`
+
+---
+
+## **Step 5: Restart Print Spooler**
+
+The **print spooler** is often the culprit:
+
+1. Open **Services (services.msc)** → find **Print Spooler** → Restart
+2. Or use Command Prompt (Admin):
+
+   ```
+   net stop spooler
+   net start spooler
+   ```
+
+---
+
+## **Step 6: Verify or Reinstall Drivers**
+
+1. Check if the correct **printer driver** is installed:
+
+   * Settings → Devices → Printers → right-click printer → **Properties → Driver**
+2. If outdated or corrupt:
+
+   * Go to the manufacturer’s site (HP, Canon, Epson) → download latest driver → reinstall
+
+---
+
+## **Step 7: Check Printer Settings**
+
+1. Ensure the correct printer is **set as default**.
+2. Verify printing is not **paused**: right-click printer → **See what’s printing → Resume Printing**
+3. Disable **Use Printer Offline** option.
+
+---
+
+## **Step 8: Test from Another Device**
+
+1. Try printing from another PC/laptop on the same network.
+
+   * Works → issue is with original PC
+   * Doesn’t work → issue is with printer/network
+
+---
+
+## **Step 9: Check Firewall & Security Software**
+
+1. Sometimes **firewalls or antivirus** block printing.
+2. Temporarily disable firewall/security software and test printing.
+
+---
+
+## **Step 10: Advanced Network Troubleshooting**
+
+1. Check router for blocked ports (especially for network printers).
+2. Assign a **static IP** to the printer.
+3. Ensure **same subnet** for PC and printer.
+
+---
+
+## **Step 11: Firmware Update**
+
+1. Check if the printer firmware is outdated.
+2. Update via the manufacturer’s site if available.
+
+---
+
+## **Step 12: Last Resort**
+
+1. Factory reset the printer (check manual).
+2. Remove printer from Windows → Add it again.
+
+---
+
+## ✅ **Best Practices**
+
+* Document every step you try.
+* Always test after each step (print a test page).
+* Communicate with the user: let them know what you’re doing.
+* Maintain a backup of drivers and printer settings for quick recovery.
+

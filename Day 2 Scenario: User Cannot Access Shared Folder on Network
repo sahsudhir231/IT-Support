@@ -1,0 +1,91 @@
+Full Troubleshooting Guide: Cannot Access Shared Folder
+________________________________________
+Step 0: Gather Information
+Before touching anything:
+1.	Ask the user:
+o	Did they change their password recently?
+o	Have they installed new software, updates, or antivirus?
+o	Has the folder location changed?
+o	Can they access the folder from another PC?
+2.	Identify:
+o	Folder path (e.g., \\server\sharedfolder)
+o	User account and group membership
+o	OS version and network type
+________________________________________
+Step 1: Check Network Connectivity
+1.	Open Command Prompt and ping the server:
+ping <server-ip>
+•	Success → PC can reach server
+•	Failure → check network cable, Wi-Fi, VPN, or router
+2.	Try to access the folder via UNC path:
+\\server\sharedfolder
+•	Error → could be permissions, firewall, or share issue
+________________________________________
+Step 2: Verify User Account
+1.	Confirm the user is active and not locked out:
+net user <username> /domain
+2.	Confirm group membership:
+net user <username> /domain
+•	Check if the user is part of the group allowed to access the folder
+3.	Ask the user to log out and log in if password was changed
+________________________________________
+Step 3: Check Folder Permissions on the Server
+1.	Right-click folder → Properties → Security
+o	Ensure the user or group has Read/Write/Modify permissions
+2.	Check Share Permissions:
+o	Properties → Sharing → Advanced Sharing → Permissions
+o	Ensure group/user has correct access
+3.	Check Effective Permissions (for complex group setups)
+________________________________________
+Step 4: Map the Folder or Reconnect
+1.	Map network drive manually:
+net use Z: \\server\sharedfolder /user:domain\username
+2.	Check if it prompts for credentials or gives “Access Denied”
+________________________________________
+Step 5: Verify Local PC Settings
+1.	Firewall / Antivirus may block SMB:
+o	Temporarily disable and test access
+2.	Ensure Windows services required for file sharing are running:
+o	Function Discovery Provider Host
+o	Function Discovery Resource Publication
+o	Server
+________________________________________
+Step 6: Test Access From Another Account
+1.	Log in with another account that should have access
+2.	If access works → issue is user-specific
+3.	If access fails → issue is folder/server/network-side
+________________________________________
+Step 7: Use Event Logs for Diagnosis
+1.	On server → Event Viewer → Windows Logs → Security
+2.	Look for failed logon or access attempts
+3.	Note error codes (e.g., 0x80070005 Access Denied)
+________________________________________
+Step 8: Advanced Network Troubleshooting
+1.	Ensure PC and server are on the same subnet/domain
+2.	Check DNS resolution:
+nslookup <server-name>
+3.	If needed, use IP address instead of server name to rule out DNS issues
+4.	Verify that SMB ports (445, 139) are open
+________________________________________
+Step 9: Reset Permissions / Reapply Access
+1.	Remove the user from the group → Re-add
+2.	Reapply permissions on the shared folder
+3.	Use icacls to verify folder ACLs if needed:
+icacls \\server\sharedfolder
+________________________________________
+Step 10: Restart Services or Devices
+1.	Restart server services for file sharing:
+o	Server, Netlogon, Workstation
+2.	If needed, reboot server or affected PC
+________________________________________
+Step 11: Last Resort
+1.	Move folder to a new location and re-share
+2.	Recreate the folder share and reapply permissions
+________________________________________
+✅ Best Practices
+•	Always document each step and result.
+•	Test after every major change (print UNC path, ping, map drive).
+•	Avoid giving Full Control unnecessarily—use least privilege principle.
+•	Keep backup of folder permissions for quick restoration.
+________________________________________
+

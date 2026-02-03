@@ -1,0 +1,102 @@
+Full Troubleshooting Guide – Day 3 Scenario
+________________________________________
+Step 0: Gather Information
+1.	Ask affected users:
+o	When did the problem start?
+o	Which services are affected (printer, email, internet)?
+o	Are other colleagues affected?
+o	Any recent changes on their PC (software, VPN, network settings)?
+2.	Document user location (floor, office area) to identify if it’s segment-specific.
+3.	Identify device types: Windows PCs, printers, servers, routers, load balancers.
+________________________________________
+Step 1: Verify Local Connectivity
+1.	Check the affected PC:
+o	Ping the printer:
+o	ping <printer-ip>
+	Success → printer reachable locally
+o	Ping local server:
+o	ping <server-ip>
+	Success → LAN connectivity fine
+2.	Check printer status locally (power, paper, errors).
+________________________________________
+Step 2: Verify Internet and Cloud Services
+1.	Ping internet addresses:
+2.	ping 8.8.8.8
+3.	ping <mail-server-ip>
+o	Timeouts → WAN/Internet issue
+o	Success → cloud/email issue is isolated to server or firewall
+4.	Test access to email/web services from another PC.
+________________________________________
+Step 3: Check Network Devices
+1.	Log in to office router/load balancer:
+o	Check WAN status
+o	Identify if primary WAN is down
+o	Check failover configuration
+2.	Check managed switches for port errors or traffic congestion.
+3.	Confirm DHCP/DNS is operational for LAN clients.
+________________________________________
+Step 4: Confirm ISP Status
+1.	Contact ISP to confirm if there’s a regional outage.
+2.	Request estimated downtime if outage exists.
+3.	Document ISP feedback.
+________________________________________
+Step 5: Diagnose Load Balancer / Failover
+1.	Check current failover policy:
+o	Is secondary WAN configured?
+o	Are automatic failover triggers set (link down, high latency, packet loss)?
+2.	Test failover manually (if safe) by disconnecting primary WAN:
+o	Ensure traffic routes to secondary WAN successfully
+3.	Reconfigure or add failover policy if needed:
+o	Primary WAN = ISP 1
+o	Secondary WAN = ISP 2
+o	Triggers: WAN down, high latency, packet loss > 5%
+________________________________________
+Step 6: Verify Local Printing
+1.	Check if printers are networked vs USB:
+o	Networked → LAN reachable? Ping printer IP
+o	USB → direct connection OK?
+2.	Restart print spooler on affected PCs if needed:
+3.	net stop spooler
+4.	net start spooler
+5.	Test printing a local test page.
+________________________________________
+Step 7: Check User PCs
+1.	Verify PC network configuration:
+o	Correct IP/subnet
+o	Correct gateway
+o	DNS settings
+2.	Clear cached credentials if users are accessing cloud printers or network shares.
+3.	Restart PC if necessary.
+________________________________________
+Step 8: Communicate with Users
+1.	Inform users of the issue and estimated resolution time.
+2.	Suggest temporary workarounds:
+o	Use local printers
+o	Use offline email (if available)
+3.	Keep users updated when failover or ISP resolution is complete.
+________________________________________
+Step 9: Test All Services
+1.	Test printing from affected PCs.
+2.	Test cloud email access.
+3.	Test internet access.
+4.	Confirm all services are operational and latency is acceptable.
+________________________________________
+Step 10: Document Incident and Preventive Measures
+1.	Document root cause:
+o	ISP outage + load balancer misconfiguration
+2.	Document actions taken:
+o	Failover policy configuration
+o	PC restarts, print spooler checks
+o	User communication
+3.	Preventive actions:
+o	Set network monitoring and alerts for WAN downtime
+o	Schedule regular load balancer failover tests
+o	Keep ISP contact info for quick verification
+4.	Follow up with users to ensure satisfaction.
+________________________________________
+✅ Best Practices:
+•	Always isolate the problem: PC vs LAN vs WAN.
+•	Test incrementally: LAN first, WAN second, services third.
+•	Document everything, including failed tests.
+•	Use redundancy (failover, secondary ISP) to minimize downtime.
+•	Communicate clearly with users to manage expectations.
